@@ -6,7 +6,6 @@ from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from pymongo import MongoClient
 from bson.objectid import ObjectId
 from datetime import datetime, timezone
 
@@ -132,7 +131,17 @@ driver.quit()
 
 
 # 1. MongoDB connection
-client = MongoClient("mongodb+srv://datascrapper:pass123@cluster0.ynqxc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+
+from dotenv import load_dotenv
+import os
+from pymongo import MongoClient
+
+load_dotenv()
+
+MONGO_URI = os.getenv("MONGO_URI")
+client = MongoClient(MONGO_URI)
+
+db = client["test"]
 
 db = client["test"]
 scholarship_col = db["scholarships"]
